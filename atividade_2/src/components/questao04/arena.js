@@ -1,11 +1,12 @@
 import React from 'react'
 
-export default props => <> {
-  React.Children.map(
-    props.children,
-    (personagem) => {
-      return React.cloneElement(personagem, {arena:props.arena})
-    }
+export default function Arena(props) {
+  return (
+    <div>
+      <h1>Questão 04</h1>
+      {React.Children.map(props.children, arena => {
+          return React.cloneElement(arena, {...props})
+      })}
+    </div>
   )
 }
-</>

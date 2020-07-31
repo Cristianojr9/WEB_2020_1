@@ -8,9 +8,7 @@ function App() {
   return (
     <>
       <Questao01 />
-      <h1> Questao03 </h1>
       <Questao03 />
-      <h1> Questao04 </h1>
       <Questao04 />
     </>
   );
