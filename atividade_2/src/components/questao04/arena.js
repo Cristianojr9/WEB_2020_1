@@ -1,14 +1,11 @@
 import React from 'react'
 
-import Hero from '../questao01/hero';
-import Enemy from '../questao01/enemy';
-
-export default props => {
-  return (
-    <>
-      <h1>{props.arena}</h1>
-      <Hero />
-      <Enemy />
-    </>
+export default props => <> {
+  React.Children.map(
+    props.children,
+    (personagem) => {
+      return React.cloneElement(personagem, {arena:props.arena})
+    }
   )
 }
+</>

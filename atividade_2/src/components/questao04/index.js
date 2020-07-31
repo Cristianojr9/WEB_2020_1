@@ -12,8 +12,8 @@ export default function Index() {
   return (
     <>
       <Arena arena="Castelão">
-        <Hero name="Flash" img={HeroImg} arena="castelão"/>
-        <Enemy name="Flash reverso" img={EnemyImg} arena="castelão"/>
+        <Hero name="Flash" img={HeroImg} />
+        <Enemy name="Flash reverso" img={EnemyImg} />
       </Arena>
     </>
   )
