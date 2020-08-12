@@ -1,0 +1,22 @@
+{
+  "disciplina": [
+    {
+      "id": 1,
+      "nome": "Fundamentos de Programacao",
+      "curso": "EC",
+      "capacidade": "30"
+    },
+    {
+      "nome": "Estrutura de Dados",
+      "curso": "Engenharia de Software",
+      "capacidade": "30",
+      "id": 2
+    },
+    {
+      "nome": "dsds",
+      "curso": "dasdsa",
+      "capacidade": "10",
+      "id": 3
+    }
+  ]
+}
