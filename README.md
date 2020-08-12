@@ -6,3 +6,5 @@ Repositório referente à disciplina de Desenvolvimento de Software para Web, se
 
 ## [Atividade 02 - Props e Children](https://github.com/Cristianojr9/WEB_2020_1/tree/master/atividade_2) 
 
+## [Atividade 03 - Json-Server](https://github.com/Cristianojr9/WEB_2020_1/tree/master/atividade_3)
+
