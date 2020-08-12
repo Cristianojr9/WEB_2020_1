@@ -3,3 +3,6 @@ Repositório referente à disciplina de Desenvolvimento de Software para Web, se
 
 ## [Atividade 01 - Props](https://github.com/Cristianojr9/WEB_2020_1/tree/master/atividade_1) 
 
+
+## [Atividade 02 - Props e Children](https://github.com/Cristianojr9/WEB_2020_1/tree/master/atividade_2) 
+
