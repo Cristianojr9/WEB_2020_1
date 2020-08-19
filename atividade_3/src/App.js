@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom'
 import Inserir from './components/Insert'
 import List from './components/List'
 import Home from './components/Home'
+import Edit from './components/Edit'
 
 export default class App extends Component{
   render(){
@@ -24,6 +25,9 @@ export default class App extends Component{
                 <li className="nav-item">
                   <Link to={'/list'} className="nav-link">List</Link>
                 </li>
+                <li className="nav-item">
+                  <Link to={'/edit'} className="nav-link">Edit</Link>
+                </li>
               </ul>
             </div>
           </nav>
@@ -32,6 +36,7 @@ export default class App extends Component{
             <Route exact path='/' component={Home}/>
             <Route path='/insert' component={Inserir}/>
             <Route path='/list' component={List}/>
+            <Route path='/edit' component={Edit}/>
           </Switch>
         </div>
       </Router>

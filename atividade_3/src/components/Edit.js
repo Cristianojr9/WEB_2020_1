@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import axios from 'axios'
 
-export default class Insert extends Component{
+export default class Edit extends Component{
     constructor(props){
         super(props)
         this.state = {nome:'', curso:'', capacidade:''}
@@ -11,6 +11,27 @@ export default class Insert extends Component{
         this.setCapacidade = this.setCapacidade.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
+
+    componentDidMount(){
+        axios.get('http://localhost:3001/disciplina/' + this.props.match.params.id)
+        .then(
+            (res)=>{
+                this.setState(
+                    {
+                        nome:res.data.nome,
+                        curso:res.data.curso,
+                        capacidade:res.data.capacidade
+                    }
+                )
+            }
+        )
+        .catch(
+            (error)=>{
+                console.log(error)
+            }
+        )
+    }
+
     setNome(e){
         this.setState({nome:e.target.value})
     }
@@ -20,25 +41,28 @@ export default class Insert extends Component{
     setCapacidade(e){
         this.setState({capacidade:e.target.value})
     }
+
     onSubmit(e){
         e.preventDefault()
-        try {
-            const novaDisciplina = {
-                nome:this.state.nome,
-                curso:this.state.curso,
-                capacidade:this.state.capacidade
+        const disciplinaAtualizada = {nome:this.state.nome,
+                                curso:this.state.curso,
+                                capacidade:this.state.capacidade}
+        axios.put('http://localhost:3001/disciplina/' + this.props.match.params.id, disciplinaAtualizada)
+        .then(
+            (res)=>{
+                this.props.history.push('/list')
             }
-            axios.post('http://localhost:3001/disciplina', novaDisciplina);
-            alert('Disciplina adicionada')
-        } catch {
-            alert('Erro ao adicionar disciplina')
-        }
-        this.setState({nome:'',curso:'',capacidade:''})
+        )
+        .catch(
+            (error)=>{
+                console.log(error)
+            }
+        )
     }
     render(){
         return(
             <div style={{marginTop:10}}>
-                <h3>Inserir disciplina</h3>
+                <h3>Editar disciplina</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Nome da disciplina:</label>
@@ -53,7 +77,7 @@ export default class Insert extends Component{
                         <input type="number" className="form-control" value={this.state.capacidade} onChange={this.setCapacidade}/>
                     </div>
                     <div className="form-group">
-                        <input type="submit" value="Adicionar" className="btn btn-primary"/>
+                        <input type="submit" value="Editar" className="btn btn-primary"/>
                     </div>
                 </form>
             </div>
