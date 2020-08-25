@@ -44,9 +44,13 @@ export default class Edit extends Component{
 
     onSubmit(e){
         e.preventDefault()
-        const disciplinaAtualizada = {nome:this.state.nome,
-                                curso:this.state.curso,
-                                capacidade:this.state.capacidade}
+        
+        const disciplinaAtualizada = {
+          nome:this.state.nome,
+          curso:this.state.curso,
+          capacidade:this.state.capacidade
+        }
+        
         axios.put('http://localhost:3001/disciplina/' + this.props.match.params.id, disciplinaAtualizada)
         .then(
             (res)=>{
