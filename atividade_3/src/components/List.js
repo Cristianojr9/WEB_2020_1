@@ -10,7 +10,7 @@ export default class List extends Component {
         this.apagarElementoPorId = this.apagarElementoPorId.bind(this)
     }
     componentDidMount() {
-        axios.get('http://localhost:3001/disciplina')
+        axios.get('http://localhost:3002/disciplinas/list')
             .then(
                 (res) => {
                     this.setState({ disciplina: res.data })
@@ -30,14 +30,14 @@ export default class List extends Component {
             }
         )
     }
-    apagarElementoPorId(id){
+    apagarElementoPorId(id) {
         let disciplinaTemp = this.state.disciplina
-        for(let i = 0; i < disciplinaTemp.length; i++){
-            if(disciplinaTemp[i].id === id){
-                disciplinaTemp.splice(i,1)
+        for (let i = 0; i < disciplinaTemp.length; i++) {
+            if (disciplinaTemp[i]._id === id) {
+                disciplinaTemp.splice(i, 1)
             }
         }
-        this.setState({disciplina:disciplinaTemp})
+        this.setState({ disciplina: disciplinaTemp })
     }
     render() {
         return (
@@ -50,7 +50,7 @@ export default class List extends Component {
                             <th>Nome</th>
                             <th>Curso</th>
                             <th>IRA</th>
-                            <th colSpan='2' style={{textAlign:'center'}}>Ações</th>
+                            <th colSpan='2' style={{ textAlign: 'center' }}>Ações</th>
                         </tr>
                     </thead>
                     <tbody>

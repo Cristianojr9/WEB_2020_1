@@ -1,11 +1,15 @@
 const DisciplinaModel = require('../models/DisciplinaModel');
 
-let disciplinas = [];
-let _id = 0;
+let disciplinas = [
+  { _id: 0, nome: 'ED', curso: 'ES', qtd: '42' },
+  { _id: 1, nome: 'ED', curso: 'ES', qtd: '42' },
+  { _id: 2, nome: 'ED', curso: 'ES', qtd: '42' }
+];
+let _id = 3;
 
 class DisciplinaService {
   static register(data) {
-    let disciplina = new DisciplinaModel (
+    let disciplina = new DisciplinaModel(
       _id++,
       data.nome,
       data.curso,
@@ -20,11 +24,11 @@ class DisciplinaService {
   }
 
   static update(_id, data) {
-    for(let e of disciplinas) {
-      if(e._id == _id) {
+    for (let e of disciplinas) {
+      if (e._id == _id) {
         e.nome = data.nome,
-        e.curso = data.curso,
-        e.qtd = data.qtd
+          e.curso = data.curso,
+          e.qtd = data.qtd
         return e;
       }
     }
@@ -32,8 +36,8 @@ class DisciplinaService {
   }
 
   static delete(_id) {
-    for(let i = 0; i < disciplinas.length; i++) {
-      if(disciplinas[i]._id == _id) {
+    for (let i = 0; i < disciplinas.length; i++) {
+      if (disciplinas[i]._id == _id) {
         disciplinas.splice(i, 1);
         return true;
       }
@@ -42,8 +46,8 @@ class DisciplinaService {
   }
 
   static retrieve(_id) {
-    for(let i = 0; i < disciplinas.length; i++) {
-      if(disciplinas[i]._id == _id) {
+    for (let i = 0; i < disciplinas.length; i++) {
+      if (disciplinas[i]._id == _id) {
         return disciplinas[i];
       }
     }
