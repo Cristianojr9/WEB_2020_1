@@ -4,11 +4,11 @@ import axios from 'axios'
 export default class Insert extends Component {
     constructor(props) {
         super(props)
-        this.state = { nome: '', curso: '', qtd: '' }
+        this.state = { nome: '', curso: '', capacidade: '' }
 
         this.setNome = this.setNome.bind(this)
         this.setCurso = this.setCurso.bind(this)
-        this.setQtd = this.setQtd.bind(this)
+        this.setCapacidade = this.setCapacidade.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
     setNome(e) {
@@ -17,8 +17,8 @@ export default class Insert extends Component {
     setCurso(e) {
         this.setState({ curso: e.target.value })
     }
-    setQtd(e) {
-        this.setState({ qtd: e.target.value })
+    setCapacidade(e) {
+        this.setState({ capacidade: e.target.value })
     }
     onSubmit(e) {
         e.preventDefault()
@@ -26,14 +26,14 @@ export default class Insert extends Component {
             const novaDisciplina = {
                 nome: this.state.nome,
                 curso: this.state.curso,
-                qtd: this.state.qtd
+                qtd: this.state.capacidade
             }
             axios.post('http://localhost:3002/disciplinas/register', novaDisciplina);
             alert('Disciplina adicionada')
         } catch {
             alert('Erro ao adicionar disciplina')
         }
-        this.setState({ nome: '', curso: '', qtd: '' })
+        this.setState({ nome: '', curso: '', capacidade: '' })
     }
     render() {
         return (
@@ -49,8 +49,8 @@ export default class Insert extends Component {
                         <input type="text" className="form-control" value={this.state.curso} onChange={this.setCurso} />
                     </div>
                     <div className="form-group">
-                        <label>QTD:</label>
-                        <input type="number" className="form-control" value={this.state.qtd} onChange={this.setQtd} />
+                        <label>Capacidade:</label>
+                        <input type="number" className="form-control" value={this.state.capacidade} onChange={this.setQtd} />
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Adicionar" className="btn btn-primary" />

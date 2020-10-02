@@ -14,8 +14,6 @@ class List extends Component {
         super(props);
 
         this.state = { disciplinas: [] }
-
-        this.apagarElementoPorId = this.apagarElementoPorId.bind(this)
     }
 
     componentDidMount() {
@@ -54,19 +52,13 @@ class List extends Component {
         if (!this.state.disciplinas) return
         return this.state.disciplinas.map(
             (disc, i) => {
-                return <TableRow disciplinas={disc} key={i} apagarElementoPorId={this.apagarElementoPorId} />
+                return <TableRow
+                    disciplinas={disc}
+                    key={i}
+                    firebase={this.props.firebase}
+                />
             }
         )
-    }
-
-    apagarElementoPorId(id) {
-        let disciplinaTemp = this.state.disciplinas
-        for (let i = 0; i < disciplinaTemp.length; i++) {
-            if (disciplinaTemp[i]._id === id) {
-                disciplinaTemp.splice(i, 1)
-            }
-        }
-        this.setState({ disciplinas: disciplinaTemp })
     }
 
     render() {
