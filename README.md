@@ -12,4 +12,5 @@ Repositório referente à disciplina de Desenvolvimento de Software para Web, se
 
 ## [Atividade 06 - React + Express](https://github.com/Cristianojr9/WEB_2020_1/tree/master/atividade_3)
 
+## [Atividade 08 - Express + Mongoose](https://github.com/Cristianojr9/WEB_2020_1/tree/master/atividade_8)
 
