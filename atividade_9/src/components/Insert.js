@@ -1,7 +1,12 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component } from 'react';
+import FirebaseContext from '../utils/FirebaseContext';
 
-export default class Insert extends Component {
+const InsertPage = () => (
+    <FirebaseContext.Consumer>
+        { contexto => <Insert firebase={contexto} />}
+    </FirebaseContext.Consumer>
+)
+class Insert extends Component {
     constructor(props) {
         super(props)
         this.state = { nome: '', curso: '', capacidade: '' }
@@ -22,17 +27,17 @@ export default class Insert extends Component {
     }
     onSubmit(e) {
         e.preventDefault()
-        try {
-            const novaDisciplina = {
+
+        this.props.firebase.getFirestore().collection('disciplinas').add(
+            {
                 nome: this.state.nome,
                 curso: this.state.curso,
-                qtd: this.state.capacidade
+                capacidade: this.state.capacidade
             }
-            axios.post('http://localhost:3002/disciplinas/register', novaDisciplina);
-            alert('Disciplina adicionada')
-        } catch {
-            alert('Erro ao adicionar disciplina')
-        }
+        )
+            .then(() => console.log('inserido'))
+            .catch(error => console.log(error))
+
         this.setState({ nome: '', curso: '', capacidade: '' })
     }
     render() {
@@ -50,7 +55,7 @@ export default class Insert extends Component {
                     </div>
                     <div className="form-group">
                         <label>Capacidade:</label>
-                        <input type="number" className="form-control" value={this.state.capacidade} onChange={this.setQtd} />
+                        <input type="number" className="form-control" value={this.state.capacidade} onChange={this.setCapacidade} />
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Adicionar" className="btn btn-primary" />
@@ -60,3 +65,5 @@ export default class Insert extends Component {
         )
     }
 }
+
+export default InsertPage;

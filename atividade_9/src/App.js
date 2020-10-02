@@ -25,9 +25,6 @@ export default class App extends Component {
                 <li className="nav-item">
                   <Link to={'/list'} className="nav-link">List</Link>
                 </li>
-                <li className="nav-item">
-                  <Link to={'/edit'} className="nav-link">Edit</Link>
-                </li>
               </ul>
             </div>
           </nav>
@@ -36,7 +33,7 @@ export default class App extends Component {
             <Route exact path='/' component={Home} />
             <Route path='/insert' component={Inserir} />
             <Route path='/list' component={List} />
-            <Route path='/edit' component={Edit} />
+            <Route path='/edit:id' component={Edit} />
           </Switch>
         </div>
       </Router>
