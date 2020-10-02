@@ -1,44 +1,74 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import TableRow from './TableRow'
+import React, { Component } from 'react';
 
-export default class List extends Component {
+import TableRow from './TableRow';
+import FirebaseContext from '../utils/FirebaseContext';
+
+const ListPage = () => (
+    <FirebaseContext.Consumer>
+        { contexto => <List firebase={contexto} />}
+    </FirebaseContext.Consumer>
+)
+
+class List extends Component {
     constructor(props) {
-        super(props)
-        this.state = { disciplina: [] }
+        super(props);
+
+        this.state = { disciplinas: [] }
 
         this.apagarElementoPorId = this.apagarElementoPorId.bind(this)
     }
+
     componentDidMount() {
-        axios.get('http://localhost:3002/disciplinas/list')
-            .then(
-                (res) => {
-                    this.setState({ disciplina: res.data })
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error)
-                }
-            )
+        this.ref = this.props.firebase.getFirestore().collection('disciplinas');
+        this.ref.onSnapshot(this.alimentarDisciplinas.bind(this));
     }
+
+    alimentarDisciplinas(query) {
+        let disciplinas = [];
+        query.forEach(
+            (doc) => {
+                const {
+                    nome,
+                    curso,
+                    capacidade
+                } = doc.data();
+                disciplinas.push(
+                    {
+                        _id: doc.id,
+                        nome,
+                        curso,
+                        capacidade
+                    }
+                )
+            }
+        )//forEach
+
+        this.setState(
+            {
+                disciplinas: disciplinas
+            }
+        );
+    }
+
     montarTabela() {
-        if (!this.state.disciplina) return
-        return this.state.disciplina.map(
+        if (!this.state.disciplinas) return
+        return this.state.disciplinas.map(
             (disc, i) => {
-                return <TableRow disciplina={disc} key={i} apagarElementoPorId={this.apagarElementoPorId} />
+                return <TableRow disciplinas={disc} key={i} apagarElementoPorId={this.apagarElementoPorId} />
             }
         )
     }
+
     apagarElementoPorId(id) {
-        let disciplinaTemp = this.state.disciplina
+        let disciplinaTemp = this.state.disciplinas
         for (let i = 0; i < disciplinaTemp.length; i++) {
             if (disciplinaTemp[i]._id === id) {
                 disciplinaTemp.splice(i, 1)
             }
         }
-        this.setState({ disciplina: disciplinaTemp })
+        this.setState({ disciplinas: disciplinaTemp })
     }
+
     render() {
         return (
             <div>
@@ -49,7 +79,7 @@ export default class List extends Component {
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Curso</th>
-                            <th>IRA</th>
+                            <th>Capacidade</th>
                             <th colSpan='2' style={{ textAlign: 'center' }}>Ações</th>
                         </tr>
                     </thead>
@@ -62,3 +92,5 @@ export default class List extends Component {
         )
     }
 }
+
+export default ListPage;
