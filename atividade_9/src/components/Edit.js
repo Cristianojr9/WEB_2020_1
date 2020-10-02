@@ -1,36 +1,33 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import FirebaseContext from '../utils/FirebaseContext';
 
-export default class Edit extends Component {
+const EditPage = (props) => (
+    <FirebaseContext.Consumer>
+        { contexto => <Edit firebase={contexto} id={props.match.params.id} />}
+    </FirebaseContext.Consumer>
+)
+
+class Edit extends Component {
     constructor(props) {
         super(props)
-        this.state = { nome: '', curso: '', qtd: '' }
+        this.state = { nome: '', curso: '', capacidade: '' }
 
         this.setNome = this.setNome.bind(this)
         this.setCurso = this.setCurso.bind(this)
-        this.setQtd = this.setQtd.bind(this)
+        this.setCapacidade = this.setCapacidade.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
 
     componentDidMount() {
-        //axios.get('http://localhost:3001/disciplina/' + this.props.match.params.id)
-        axios.get('http://localhost:3002/disciplina/retrieve/' + this.props.match.params.id)
-            .then(
-                (res) => {
-                    this.setState(
-                        {
-                            nome: res.data.nome,
-                            curso: res.data.curso,
-                            qtd: res.data.qtd
-                        }
-                    )
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error)
-                }
-            )
+        this.props.firebase.getFirestore().collection('disciplinas').doc(this.props.id).get()
+            .then((doc) => {
+                this.setState({
+                    nome: doc.data().nome,
+                    curso: doc.data().curso,
+                    capacidade: doc.data().capacidade
+                })
+            })
+            .catch(error => console.log(error))
     }
 
     setNome(e) {
@@ -39,31 +36,25 @@ export default class Edit extends Component {
     setCurso(e) {
         this.setState({ curso: e.target.value })
     }
-    setQtd(e) {
-        this.setState({ qtd: e.target.value })
+    setCapacidade(e) {
+        this.setState({ capacidade: e.target.value })
     }
 
     onSubmit(e) {
         e.preventDefault()
 
-        const disciplinaAtualizada = {
-            nome: this.state.nome,
-            curso: this.state.curso,
-            qtd: this.state.qtd
-        }
+        this.props.firebase.getFirestore().collection('disciplinas').doc(this.props.id).set(
+            {
+                nome: this.state.nome,
+                curso: this.state.curso,
+                capacidade: this.state.capacidade
+            }
+        )
+            .then(() => console.log('editado'))
+            .catch((error) => console.log(error))
 
-        axios.put('http://localhost:3002/disciplinas/update/' + this.props.match.params.id, disciplinaAtualizada)
-            .then(
-                (res) => {
-                    this.props.history.push('/list')
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error)
-                }
-            )
     }
+
     render() {
         return (
             <div style={{ marginTop: 10 }}>
@@ -78,8 +69,8 @@ export default class Edit extends Component {
                         <input type="text" className="form-control" value={this.state.curso} onChange={this.setCurso} />
                     </div>
                     <div className="form-group">
-                        <label>Qtd:</label>
-                        <input type="number" className="form-control" value={this.state.qtd} onChange={this.setQtd} />
+                        <label>Capacidade:</label>
+                        <input type="number" className="form-control" value={this.state.capacidade} onChange={this.setCapacidade} />
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Editar" className="btn btn-primary" />
@@ -89,3 +80,5 @@ export default class Edit extends Component {
         )
     }
 }
+
+export default EditPage;
